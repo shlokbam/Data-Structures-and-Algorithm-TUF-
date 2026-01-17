@@ -1,18 +1,80 @@
+import java.util.*;
+
+// class Solution {
+//     public int[] twoSum(int[] nums, int target) {
+//         int[] ans = new int[2];
+//         int n = nums.length;
+//         for (int i = 0; i<n; i++){
+//             for (int j = i+1 ;j<n; j++){
+//                 if(nums[i]+nums[j]==target){
+//                     ans[0] = i;
+//                     ans[1] = j;
+//                     return ans;
+//                 }
+//             }
+//         }
+//         return new int[]{-1,-1};
+//     }
+// }
+
+// class Solution {
+//     public int[] twoSum(int[] nums, int target) {
+//         Map<Integer,Integer> mpp = new HashMap<>();
+//         int n = nums.length;
+//         for(int i = 0; i<n;i++){
+//             int num = nums[i];
+//             int moreneed = target - num;
+//             if(mpp.containsKey(moreneed)){
+//                 return new int[]{mpp.get(moreneed),i};
+//             }
+//             mpp.put(nums[i],i);
+//         }
+//         return new int[]{-1,-1};
+//     }
+// }
+
 class Solution {
-    public int missingNumber(int[] nums) {
+    public int[] twoSum(int[] nums, int target) {
+        int[] ans = new int[2];
         int n = nums.length;
-        for(int i=0;i<=n;i++){
-            int flag = 0;
-            for(int j=0;j<n;j++){
-                if(nums[j]==i){
-                    flag = 1;
-                    break;
-                }
+        int[][] eleIndex = new int[n][2];
+        for (int i = 0; i < nums.length; i++) {
+            eleIndex[i][0] = nums[i];
+            eleIndex[i][1] = i;
+        }Arrays.sort(eleIndex, new Comparator<int[]>() {
+            public int compare(int[] a, int[] b) {
+                return Integer.compare(a[0], b[0]);
             }
-            if(flag==0){
-                return i;
+        });
+
+        int left = 0;
+        int right = n-1;
+        while(left<right){
+            int sum = eleIndex[left][0] + eleIndex[right][0];
+            if(sum==target){
+                ans[0] = eleIndex[left][1];
+                ans[1] = eleIndex[right][1];
+                return ans;
+            }
+            else if(sum<target){
+                left++;
+            }
+            else{
+                right--;
             }
         }
-        return -1;
+        return new int[]{-1,-1};
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
