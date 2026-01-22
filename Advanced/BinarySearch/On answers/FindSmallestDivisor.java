@@ -1,0 +1,30 @@
+class Solution {
+    private int sumByD(int[] nums, int limit) {
+        // Size of array
+        int n = nums.length; 
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += Math.ceil((double)nums[i] / (double)limit);
+        }
+        return sum;
+    }
+    public int smallestDivisor(int[] nums, int limit) {
+        int n = nums.length;
+        if (n > limit) return -1;
+        int maxi = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++) {
+            maxi = Math.max(maxi, nums[i]);
+        }
+
+        int low = 1, high = maxi;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (sumByD(nums, mid) <= limit) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return low;
+    }
+}
